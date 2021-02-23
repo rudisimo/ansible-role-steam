@@ -1,0 +1,23 @@
+#!/usr/bin/env bash
+
+set -e
+
+test -e steamcmd && steamcmd \
+  +login {{ steam_account | default('anonymous') }} {{ steam_password | default('') }} \
+  +force_install_dir {{ valheim_install_path }} \
+  +app_update {{ valheim_steam_server_id }} validate \
+  +quit
+
+export OLD_LD_LIBRARY_PATH=$LD_LIBRARY_PATH
+export LD_LIBRARY_PATH={{ valheim_install_path }}/linux64:$LD_LIBRARY_PATH
+export SteamAppId={{ valheim_steam_app_id }}
+
+cd {{ valheim_install_path }}
+{{ valheim_install_path }}/valheim_server.x86_64 \
+  -name "{{ item.name }}" \
+  -password "{{ item.password }}" \
+  -port "{{ item.port }}" \
+  -world "{{ item.world | default('Dedicated') }}" \
+  -savedir "{{ item.savedir | default(valheim_saves_path) }}/{{ item.port }}"
+
+export LD_LIBRARY_PATH=$OLD_LD_LIBRARY_PATH

@@ -1,0 +1,33 @@
+---
+- name: configure | download latest steam client
+  ansible.builtin.unarchive:
+    src: "{{ steam_download_url }}"
+    dest: "{{ steam_install_path }}"
+    owner: "{{ steam_user }}"
+    group: "{{ steam_user }}"
+    mode: 0755
+    remote_src: true
+  become_user: "{{ steam_user }}"
+  register: steamrc
+
+- name: configure | validate steam client installation
+  ansible.builtin.shell: >
+    ./steamcmd.sh validate +quit
+  args:
+    chdir: "{{ steam_install_path }}"
+  become_user: "{{ steam_user }}"
+  when: steamrc is defined and steamrc.changed
+
+- name: configure | install steam games
+  ansible.builtin.shell: >
+    test -e "{{ steam_games_path }}/{{ item.path | default(item.id) }}" || \
+    ./steamcmd.sh \
+      +login {{ steam_account | default('anonymous') }} {{ steam_password | default('') }} \
+      +force_install_dir "{{ steam_games_path }}/{{ item.path | default(item.id) }}" \
+      +app_update {{ item.id }} validate \
+      +quit
+  with_items: "{{ steam_games }}"
+  args:
+    chdir: "{{ steam_install_path }}"
+  become_user: "{{ steam_user }}"
+  when: steam_install_games | bool

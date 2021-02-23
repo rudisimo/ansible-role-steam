@@ -1,0 +1,25 @@
+---
+dependencies: []
+
+galaxy_info:
+  role_name: steam
+  description: Steam for Linux.
+  author: rudisimo
+  company: "Puig & Co."
+  license: "MIT"
+  min_ansible_version: 2.7
+  platforms:
+    - name: Debian
+      versions:
+        - all
+    - name: Ubuntu
+      versions:
+        - trusty
+        - xenial
+        - bionic
+  galaxy_tags:
+    - steam
+    - steamcmd
+    - games
+
+allow_duplicates: true

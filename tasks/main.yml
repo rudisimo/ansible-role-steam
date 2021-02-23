@@ -1,0 +1,39 @@
+---
+- include_vars: "{{ os_vars }}"
+  vars:
+    params:
+      files:
+        - "{{ ansible_distribution | lower }}-{{ ansible_distribution_major_version }}.yml"
+        - "{{ ansible_distribution | lower }}.yml"
+        - "{{ ansible_os_family | lower }}.yml"
+      paths:
+        - vars
+  loop: "{{ query('first_found', params, errors='ignore') }}"
+  loop_control:
+    loop_var: os_vars
+
+- include_tasks: "{{ setup_task }}"
+  vars:
+    params:
+      files:
+        - "{{ ansible_distribution | lower }}-{{ ansible_distribution_major_version }}-setup.yml"
+        - "{{ ansible_distribution | lower }}-setup.yml"
+        - "{{ ansible_os_family | lower }}-setup.yml"
+  loop: "{{ query('first_found', params) }}"
+  loop_control:
+    loop_var: setup_task
+  tags:
+    - setup
+
+- include_tasks: "{{ configure_task }}"
+  vars:
+    params:
+      files:
+        - "{{ ansible_distribution | lower }}-{{ ansible_distribution_major_version }}-configure.yml"
+        - "{{ ansible_distribution | lower }}-configure.yml"
+        - "{{ ansible_os_family | lower }}-configure.yml"
+  loop: "{{ query('first_found', params) }}"
+  loop_control:
+    loop_var: configure_task
+  tags:
+    - configure

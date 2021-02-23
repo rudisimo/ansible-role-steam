@@ -1,0 +1,23 @@
+[Unit]
+# Auto-generated, DO NOT EDIT
+Description=Service for Valheim Dedicated Server ({{ item.port }})
+Wants=network.target
+After=syslog.target network-online.target
+
+[Service]
+EnvironmentFile=/etc/environment
+ExecStart={{ valheim_server_script_prefix }}_{{ item.port }}
+SyslogIdentifier={{ valheim_server_service_prefix }}-{{ item.port }}
+PIDFile=/var/run/{{ valheim_server_service_prefix }}/{{ item.port }}.pid
+Restart=always
+RestartSec=10
+WorkingDirectory={{ valheim_install_path }}
+TimeoutStopSec=60
+Type=simple
+KillMode=process
+KillSignal=SIGINT
+User={{ valheim_control_user }}
+Group={{ valheim_control_group }}
+
+[Install]
+WantedBy=multi-user.target

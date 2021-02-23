@@ -1,0 +1,15 @@
+---
+steam_install_path: /opt/steam
+
+steam_packages_i386: []
+steam_packages: []
+
+steam_download_filename: steamcmd_linux.tar.gz
+steam_download_url: "https://steamcdn-a.akamaihd.net/client/installer/{{ steam_download_filename }}"
+
+steam_install_games: false
+steam_games_path: /usr/local/games/steam
+steam_games: []
+
+steam_user: steam
+steam_user_id: 10999

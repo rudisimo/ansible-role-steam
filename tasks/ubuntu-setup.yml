@@ -1,0 +1,47 @@
+---
+- name: setup | add i386 architecture
+  ansible.builtin.command: dpkg --add-architecture i386
+  args:
+    creates: /var/lib/dpkg/arch
+  when: ansible_architecture != 'i386'
+
+- name: setup | update apt cache
+  ansible.builtin.apt:
+    update_cache: true
+    cache_valid_time: 3600
+
+- name: setup | install packages (lib32)
+  ansible.builtin.apt:
+    name: "{{ steam_packages_i386 }}"
+    state: present
+  when: ansible_architecture != 'i386'
+
+- name: setup | install packages
+  ansible.builtin.apt:
+    name: "{{ steam_packages }}"
+    state: present
+
+- name: setup | add steam group
+  ansible.builtin.group:
+    name: "{{ steam_user }}"
+    gid: "{{ steam_user_id }}"
+    state: present
+
+- name: setup | add steam user
+  ansible.builtin.user:
+    name: "{{ steam_user }}"
+    uid: "{{ steam_user_id }}"
+    group: "{{ steam_user }}"
+    home: "{{ steam_install_path }}"
+    shell: /bin/bash
+    createhome: true
+
+- name: setup | create directories
+  ansible.builtin.file:
+    path: "{{ item }}"
+    owner: "{{ steam_user }}"
+    group: "{{ steam_user }}"
+    state: directory
+  with_items:
+    - "{{ steam_install_path }}"
+    - "{{ steam_games_path }}"
