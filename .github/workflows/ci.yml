@@ -1,0 +1,33 @@
+---
+name: CI
+
+on:
+  pull_request:
+  push:
+    branches:
+      - master
+
+jobs:
+  lint:
+    name: Lint
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout the codebase.
+        uses: actions/checkout@v2
+        with:
+          path: rudisimo.steam
+
+      - name: Set up Python 3.
+        uses: actions/setup-python@v2
+        with:
+          python-version: '3.x'
+
+      - name: Install dependencies.
+        run: |
+          pip3 install -r requirements.txt
+          pip3 install -r requirements-ci.txt
+
+      - name: Lint codebase.
+        run: |
+          yamllint .
+          ansible-lint
