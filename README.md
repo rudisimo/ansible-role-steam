@@ -1,5 +1,7 @@
 # Ansible Role: Steam
 
+[![CI](https://github.com/rudisimo/ansible-role-steam/actions/workflows/ci.yml/badge.svg)](https://github.com/rudisimo/ansible-role-steam/actions/workflows/ci.yml)
+
 Installs Steam on Debian/Ubuntu servers.
 
 This roles installs and configures the latest version of [SteamCMD](https://developer.valvesoftware.com/wiki/SteamCMD).
