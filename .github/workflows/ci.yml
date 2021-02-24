@@ -7,6 +7,10 @@ name: CI
     branches:
       - master
 
+defaults:
+  run:
+    working-directory: rudisimo.steam
+
 jobs:
   lint:
     name: Lint
@@ -24,8 +28,8 @@ jobs:
 
       - name: Install dependencies.
         run: |
-          pip3 install -r rudisimo.steam/requirements.txt
-          pip3 install -r rudisimo.steam/requirements-ci.txt
+          pip3 install -r requirements.txt
+          pip3 install -r requirements-lint.txt
 
       - name: Lint codebase.
         run: |

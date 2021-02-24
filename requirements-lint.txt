@@ -1,3 +1,2 @@
-molecule[ansible]
 yamllint
 ansible-lint
