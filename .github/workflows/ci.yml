@@ -28,8 +28,7 @@ jobs:
 
       - name: Install dependencies.
         run: |
-          pip3 install -r requirements.txt
-          pip3 install -r requirements-lint.txt
+          pip3 install -r requirements.txt -r requirements-lint.txt
 
       - name: Lint codebase.
         run: |
