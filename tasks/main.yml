@@ -1,5 +1,6 @@
 ---
-- include_vars: "{{ os_vars }}"
+- name: include os-specific variables
+  include_vars: "{{ os_vars }}"
   vars:
     params:
       files:
@@ -12,7 +13,8 @@
   loop_control:
     loop_var: os_vars
 
-- include_tasks: "{{ setup_task }}"
+- name: execute setup tasks
+  include_tasks: "{{ setup_task }}"
   vars:
     params:
       files:
@@ -25,7 +27,8 @@
   tags:
     - setup
 
-- include_tasks: "{{ configure_task }}"
+- name: execute configure tasks
+  include_tasks: "{{ configure_task }}"
   vars:
     params:
       files:

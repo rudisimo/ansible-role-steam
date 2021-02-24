@@ -8,7 +8,6 @@
     mode: 0755
     remote_src: true
   become_user: "{{ steam_user }}"
-  register: steamrc
 
 - name: configure | validate steam client installation
   ansible.builtin.shell: >
@@ -16,7 +15,6 @@
   args:
     chdir: "{{ steam_install_path }}"
   become_user: "{{ steam_user }}"
-  when: steamrc is defined and steamrc.changed
 
 - name: configure | install steam games
   ansible.builtin.shell: >
