@@ -51,7 +51,13 @@ steam_password:
 ## Example Playbook
 
 ```yaml
-- hosts: all
+- name: install the steam client
+  hosts: all
+  become: yes
+
+  roles:
+    - role: rudisimo.steam
+
   vars:
     steam_install_path: /opt/steam
     steam_user: steam
@@ -63,8 +69,6 @@ steam_password:
     steam_games:
       - name: Valheim
         id: 892970
-  roles:
-    - { role: rudisimo.steam }
 ```
 
 ## License
