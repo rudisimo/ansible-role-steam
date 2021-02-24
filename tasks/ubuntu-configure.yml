@@ -28,4 +28,4 @@
   args:
     chdir: "{{ steam_install_path }}"
   become_user: "{{ steam_user }}"
-  when: steam_install_games | bool
+  when: steam_add_games | bool

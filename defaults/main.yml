@@ -7,7 +7,7 @@ steam_packages: []
 steam_download_filename: steamcmd_linux.tar.gz
 steam_download_url: "https://steamcdn-a.akamaihd.net/client/installer/{{ steam_download_filename }}"
 
-steam_install_games: false
+steam_add_games: false
 steam_games_path: /usr/local/games/steam
 steam_games: []
 

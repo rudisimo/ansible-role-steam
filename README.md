@@ -23,7 +23,7 @@ steam_install_path: /opt/steam
 If set to true, enables and specifies where the Steam game files, managed by this role's variables (see `steam_games`), will be installed.
 
 ```yaml
-steam_install_games: true
+steam_add_games: true
 steam_games_path: /usr/local/games/steam
 ```
 
@@ -51,7 +51,7 @@ steam_password:
 ## Example Playbook
 
 ```yaml
-- name: install the steam client
+- name: configure a steam client
   hosts: all
   become: yes
 
@@ -60,12 +60,13 @@ steam_password:
 
   vars:
     steam_install_path: /opt/steam
+    steam_games_path: /usr/local/games/steam
     steam_user: steam
+
     steam_account: steam_account
     steam_password: steam_password # always put your secrets in a vault :)
 
-    steam_install_games: true
-    steam_games_path: /usr/local/games/steam
+    steam_add_games: true
     steam_games:
       - name: Valheim
         id: 892970
